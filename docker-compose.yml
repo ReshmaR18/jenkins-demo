@@ -1,0 +1,32 @@
+version: '3'
+services:
+  SpringBootApp:
+    image: reshmar18/userservice:1.0
+    container_name: docker-userservice-app
+    environment:
+      - POSTGRES_HOST=docker-userservice-db
+    ports:
+      - "8086:8094"
+    networks:
+      - network
+    depends_on:
+      - postgresDb
+    restart: on-failure
+
+  postgresDb:
+    image: postgres:13.2
+    container_name: docker-userservice-db
+    ports:
+      - "5434:5432"
+    networks:
+      - network
+    volumes:
+      - volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Classmate#
+      - POSTGRES_DB=Products
+networks:
+  network:
+volumes:
+  volume:
